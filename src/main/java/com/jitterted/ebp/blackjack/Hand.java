@@ -39,14 +39,15 @@ public class Hand {
     return value() <= 16;
   }
 
-  String displayFirstCard() {
-    return ConsoleCard.display(cards.get(0));
+  // QUERY: SNAPSHOT of state
+  public List<Card> cards() {
+    return List.copyOf(cards);
   }
 
   void display() {
-    System.out.println(cards.stream()
-                            .map(ConsoleCard::display)
-                            .collect(Collectors.joining(
+    System.out.println(cards().stream()
+                              .map(ConsoleCard::display)
+                              .collect(Collectors.joining(
                                ansi().cursorUp(6).cursorRight(1).toString())));
   }
 
