@@ -41,10 +41,6 @@ public class Hand {
     return List.copyOf(cards);
   }
 
-  void display() {
-    System.out.println(ConsoleHand.cardsAsString(this));
-  }
-
   public void drawFrom(Deck deck) {
     cards.add(deck.draw());
   }
