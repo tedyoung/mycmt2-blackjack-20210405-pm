@@ -4,6 +4,7 @@ import org.fusesource.jansi.Ansi;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+// part of the Console Adapter
 public class ConsoleCard {
 
   // transform DOMAIN --> usable by an ADAPTER: String on a Console

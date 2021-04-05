@@ -35,12 +35,12 @@ public class Hand {
     return handValue;
   }
 
-  String displayFirstCard() {
-    return ConsoleCard.display(cards.get(0));
-  }
-
   boolean dealerMustDrawCard() {
     return value() <= 16;
+  }
+
+  String displayFirstCard() {
+    return ConsoleCard.display(cards.get(0));
   }
 
   void display() {
