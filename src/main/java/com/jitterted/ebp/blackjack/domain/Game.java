@@ -19,6 +19,7 @@ public class Game {
   public void initialDeal() {
     dealRoundOfCards();
     dealRoundOfCards();
+    // if blackjack, then isPlayerDone = true
   }
 
   private void dealRoundOfCards() {
@@ -28,6 +29,10 @@ public class Game {
   }
 
   public GameOutcome determineOutcome() {
+    // Guard: throw exception if isPlayerDone == false
+    if (playerHand.isBlackjack()) {
+      return GameOutcome.PLAYER_WINS_BLACKJACK;
+    }
     if (playerHand.isBusted()) {
       return GameOutcome.PLAYER_BUSTED;
     }
@@ -62,11 +67,13 @@ public class Game {
   }
 
   public void playerHits() {
+    // Guard: throw exception if playerDone == true
     playerHand.drawFrom(deck);
     playerDone = playerHand.isBusted();
   }
 
   public void playerStands() {
+    // Guard: throw exception if playerDone == true
     playerDone = true;
   }
 
