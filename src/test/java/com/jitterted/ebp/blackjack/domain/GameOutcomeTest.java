@@ -8,9 +8,9 @@ class GameOutcomeTest {
 
   @Test
   public void playerBeatsDealer() throws Exception {
-    Deck stubDeck = new StubDeck(Rank.QUEEN, Rank.EIGHT,
-                                 Rank.TEN, Rank.JACK);
-    Game game = new Game(stubDeck);
+    Deck playerBeatsDealerDeck = new StubDeck(Rank.QUEEN, Rank.EIGHT,
+                                              Rank.TEN, Rank.JACK);
+    Game game = new Game(playerBeatsDealerDeck);
     game.initialDeal();
 
     game.playerStands();
@@ -18,5 +18,19 @@ class GameOutcomeTest {
 
     assertThat(game.determineOutcome())
         .isEqualTo("You beat the Dealer! 💵");
+  }
+
+  @Test
+  public void playerHitsAndGoesBustResultsInPlayerLoses() throws Exception {
+    Deck playerHitsGoesBustDeck = new StubDeck(Rank.QUEEN, Rank.EIGHT,
+                                               Rank.TEN, Rank.FOUR,
+                                               Rank.THREE);
+    Game game = new Game(playerHitsGoesBustDeck);
+    game.initialDeal();
+
+    game.playerHits();
+
+    assertThat(game.determineOutcome())
+        .isEqualTo("You Busted, so you lose.  💸");
   }
 }
