@@ -26,15 +26,17 @@ public class Game {
   public String determineOutcome() {
     if (playerHand.isBusted()) {
       return "You Busted, so you lose.  💸";
-    } else if (dealerHand.isBusted()) {
-      return "Dealer went BUST, Player wins! Yay for you!! 💵";
-    } else if (playerHand.beats(dealerHand)) {
-      return "You beat the Dealer! 💵";
-    } else if (playerHand.pushes(dealerHand)) {
-      return "Push: The house wins, you Lose. 💸";
-    } else {
-      return "You lost to the Dealer. 💸";
     }
+    if (dealerHand.isBusted()) {
+      return "Dealer went BUST, Player wins! Yay for you!! 💵";
+    }
+    if (playerHand.beats(dealerHand)) {
+      return "You beat the Dealer! 💵";
+    }
+    if (playerHand.pushes(dealerHand)) {
+      return "Push: The house wins, you Lose. 💸";
+    }
+    return "You lost to the Dealer. 💸";
   }
 
   public void dealerTurn() {
