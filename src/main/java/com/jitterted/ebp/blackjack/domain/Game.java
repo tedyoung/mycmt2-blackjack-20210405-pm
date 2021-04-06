@@ -46,6 +46,7 @@ public class Game {
     }
   }
 
+  // Query: snapshot cards() & value() and return Value Object
   public Hand playerHand() {
     return playerHand;
   }

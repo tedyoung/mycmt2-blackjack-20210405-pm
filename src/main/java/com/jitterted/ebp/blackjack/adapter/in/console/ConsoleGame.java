@@ -15,11 +15,45 @@ public class ConsoleGame {
     this.game = game;
   }
 
-  public static void resetScreen() {
+  public void start() {
+    displayWelcomeScreen();
+
+    game.initialDeal();
+
+    playerPlays();
+
+    game.dealerTurn();
+
+    displayFinalGameState();
+
+    System.out.println(game.determineOutcome());
+
+    resetScreen();
+  }
+
+  // Game loop
+  private void playerPlays() {
+    while (!game.isPlayerDone()) {
+      displayGameState();
+      String command = inputFromPlayer();
+      handle(command);
+    }
+  }
+
+  // Translating input from "infrastructure" to a Domain Command
+  private void handle(String command) {
+    if (command.toLowerCase().startsWith("h")) {
+      game.playerHits();
+    } else if (command.toLowerCase().startsWith("s")) {
+      game.playerStands();
+    }
+  }
+
+  private void resetScreen() {
     System.out.println(ansi().reset());
   }
 
-  public static void displayWelcomeScreen() {
+  private void displayWelcomeScreen() {
     System.out.println(ansi()
                            .bgBright(Ansi.Color.WHITE)
                            .eraseScreen()
@@ -29,13 +63,13 @@ public class ConsoleGame {
                            .fgBlack().a(" BlackJack"));
   }
 
-  public static String inputFromPlayer() {
+  private String inputFromPlayer() {
     System.out.println("[H]it or [S]tand?");
     Scanner scanner = new Scanner(System.in);
     return scanner.nextLine();
   }
 
-  public static void displayBackOfCard() {
+  private void displayBackOfCard() {
     System.out.print(
         ansi()
             .cursorUp(7)
@@ -49,7 +83,7 @@ public class ConsoleGame {
             .a("└─────────┘"));
   }
 
-  public static void displayGameState(Game game) {
+  private void displayGameState() {
     System.out.print(ansi().eraseScreen().cursor(1, 1));
     System.out.println("Dealer has: ");
     System.out.println(ConsoleHand.displayFirstCard(game.dealerHand())); // first card is Face Up
@@ -63,7 +97,7 @@ public class ConsoleGame {
     System.out.println(" (" + game.playerHand().value() + ")");
   }
 
-  public static void displayFinalGameState(Game game) {
+  private void displayFinalGameState() {
     System.out.print(ansi().eraseScreen().cursor(1, 1));
     System.out.println("Dealer has: ");
     System.out.println(ConsoleHand.cardsAsString(game.dealerHand()));
@@ -73,40 +107,6 @@ public class ConsoleGame {
     System.out.println("Player has: ");
     System.out.println(ConsoleHand.cardsAsString(game.playerHand()));
     System.out.println(" (" + game.playerHand().value() + ")");
-  }
-
-  public void start() {
-    displayWelcomeScreen();
-
-    game.initialDeal();
-
-    playerPlays();
-
-    game.dealerTurn();
-
-    displayFinalGameState(game);
-
-    System.out.println(game.determineOutcome());
-
-    resetScreen();
-  }
-
-  // Game loop
-  public void playerPlays() {
-    while (!game.isPlayerDone()) {
-      displayGameState(game);
-      String command = inputFromPlayer();
-      handle(command);
-    }
-  }
-
-  // Translating input from "infrastructure" to a Domain Command
-  public void handle(String command) {
-    if (command.toLowerCase().startsWith("h")) {
-      game.playerHits();
-    } else if (command.toLowerCase().startsWith("s")) {
-      game.playerStands();
-    }
   }
 
 }
