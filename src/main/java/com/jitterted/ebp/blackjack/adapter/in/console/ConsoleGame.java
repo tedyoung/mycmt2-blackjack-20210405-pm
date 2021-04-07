@@ -26,7 +26,8 @@ public class ConsoleGame {
 
     displayFinalGameState();
 
-    System.out.println(game.determineOutcome().value());
+    String outcomeString = ConsoleGameOutcome.of(game.determineOutcome());
+    System.out.println(outcomeString);
 
     resetScreen();
   }
